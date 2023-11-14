@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\title{johalls-complexity}
+\author{Jonathan Hallström}
+\date{November 2023}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Induktion}
+\subsection{}
+
+$$P(n):  \sum _{i=1}^n i^2=\frac{n(n+1)(2n+1)}{6}$$
+
+Induktionssteg:
+Basfall  $P(1)$
+$$\sum _{i=1}^1 i^2=\frac{1(1+1)(2(1)+1)}{6} \iff 1^2=\frac{1(2)(3)}{6} \iff 1=1$$
+
+Induktionssteg, antar $P(k), k \in \mathbb{N}$
+$$\sum _{i=1}^k i^2=\frac{k(k+1)(2k+1)}{6}$$
+$$ \iff (k+1)^2 + \sum _{i=1}^k i^2=(k+1)^2+\frac{k(k+1)(2k+1)}{6}$$
+$$\iff \sum _{i=1}^{k+1} i^2=\frac{6(k+1)^2}{6}+\frac{k(k+1)(2k+1)}{6}$$
+$$\iff \sum _{i=1}^{k+1} i^2=\frac{(k+2)(k+1)(2k+3)}{6}$$
+$$\implies (P(k) \implies P(k+1))$$
+Induktionsprincipen ger $P(n)$ är sann $\forall n \in \mathbb{N}$
+
+\subsection{}
+Definition:
+$$P(n):  \sum _{i=1}^n 2i-1=n^2$$
+
+Basfall  $P(1)$
+$$\sum _{i=1}^1 2i-1=1^2\iff 2(1)-1=1\iff1=1$$
+
+Induktionssteg, antar $P(k),k \in \mathbb{N}$
+$$\sum _{i=1}^k 2i-1=k^2$$
+$$\iff (2k+1)+\sum _{i=1}^k 2i-1=(2k+1)+k^2$$
+$$\iff \sum _{i=1}^{k+1} 2i-1=(k+1^2)$$
+$$\implies (P(k) \implies P(k+1))$$
+
+\section{Iterativ korrekthet}
+TC: $O(n)$
+MC: $O(1)$
+
+Börjar med $res_0=1$ (basfall)
+Sedan varje iteration $res_{i+1}=i*res_i$ (induktionssteg)
+$\implies res_i=x^i$
+Resultatet är $res_n$ alltså $x^n$
+
+\section{Rekursiv korrekthet}
+$T(n) = aT(n/b)+f(n)$ med $f(n)=1,a=2,b=2$
+Mästarsatsen ger $T(n) \in\mathbb{\Theta}(n)$
+TC: $O(n)$ 
+MC: $O(log(n))$ (pga $log(n)$ rekursionsdjup, antar $O(1)$ minne per rekursion)
+Def: $$e(n) = \begin{cases}
+e^n & n \leq 4 \\
+e^{\lfloor n/2 \rfloor}e^{\lceil n/2 \rceil} & n > 4\\
+\end{cases}
+$$
+\subsection{Visar ${\lfloor n/2 \rfloor}+{\lceil n/2 \rceil}=n$}
+\subsubsection{Om $n=2k+1,k\in \mathbb{N}$}
+$${\lfloor n/2 \rfloor}={\lfloor (2k+1)/2 \rfloor}={\lfloor k + \frac{1}{2} \rfloor}=k$$
+$${\lceil n/2 \rceil}={\lceil(2k+1)/2 \rceil}={\lceil k + \frac{1}{2} \rceil}=k+1$$
+$$\implies {\lfloor n/2 \rfloor}+{\lceil n/2 \rceil}=2k+1=n$$
+ 
+\subsubsection{Om $n=2k,k\in \mathbb{N}$}
+$${\lfloor n/2 \rfloor}={\lfloor 2k/2 \rfloor}=k$$
+$${\lceil n/2 \rceil}={\lceil2k/2 \rceil}=k$$
+$$\implies {\lfloor n/2 \rfloor}+{\lceil n/2 \rceil}=2k=n$$
+
+$\implies e^{\lfloor n/2 \rfloor}e^{\lceil n/2 \rceil}=e^{\lfloor n/2 \rfloor + \lceil n/2 \rceil}=e^n$
+
+$\implies e(n) = e^n$
+
+\end{document}
